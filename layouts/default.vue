@@ -1,4 +1,4 @@
 <template>
-  <p>ini layout</p>
+  <NavBar />
   <slot></slot>
 </template>
