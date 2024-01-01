@@ -6,12 +6,16 @@ const useScroll = () => {
   const updateScroll = () => {
     scrollPosition.value = window.scrollY;
   };
-  const scrollTo = (navEl: string) => {
-    let element = document.querySelector(`#${navEl}`);
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
 
-  return { scrollTo, updateScroll, scrollPosition }
-}
+  onMounted(() => {
+    window.addEventListener("scroll", updateScroll);
+  });
 
-export { useScroll }
+  onUnmounted(() => {
+    window.removeEventListener("scroll", updateScroll);
+  });
+
+  return { scrollPosition };
+};
+
+export { useScroll };

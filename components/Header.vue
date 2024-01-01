@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { scrollTo } = useScroll();
+import { scrollTo } from "~/utils";
 </script>
 <template>
   <div
