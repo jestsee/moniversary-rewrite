@@ -3,7 +3,7 @@
     <Header />
   </div>
   <div id="wishes" class="bg-gray-100 px-10 pt-16 lg:pt-20">
-    disini wish view
+    <WishesView />
   </div>
-  <div id="footer" class="bg-black px-10 text-white"><Footer/></div>
+  <div id="footer" class="bg-black px-10 text-white"><Footer /></div>
 </template>

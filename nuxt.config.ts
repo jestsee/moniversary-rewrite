@@ -6,4 +6,7 @@ export default defineNuxtConfig({
     notionSecret: process.env.NOTION_API_SECRET,
     notionDatabaseId: process.env.NOTION_DATABASE_ID,
   },
+  typescript: {
+    strict: true,
+  },
 });

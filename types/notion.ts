@@ -23,9 +23,12 @@ type FilterRichTextItem<T> = T extends Record<"type", infer Type extends string>
     ? T
     : never
   : never;
-  
-type RichTextPropertyValue = FilterRichTextItem<PropertyValue>;
-export type RichTextProperty = RichTextPropertyValue['type']
+
+export type RichTextPropertyValue = FilterRichTextItem<PropertyValue>;
+export type RichTextPropertyType = RichTextPropertyValue["type"];
 
 export type ExtractedPropertyValue<TType extends PropertyType> =
   FilterFromEmptyObject<Extract<PropertyValue, { type: TType }>>;
+
+export type ExtractedRichTextPropertyValue<TType extends RichTextPropertyType> =
+  FilterFromEmptyObject<Extract<RichTextPropertyValue, { type: TType }>>;
