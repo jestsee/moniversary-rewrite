@@ -5,7 +5,6 @@ import AddWishContainer from "./AddWishContainer.vue";
 import AddWish from "./AddWish.vue";
 import Loading from "./Loading.vue";
 
-// const { fetchWishes, wishes, loadingWish, reload } = useWish();
 const {
   data: wishes,
   refresh,

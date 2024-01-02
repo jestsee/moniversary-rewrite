@@ -3,7 +3,12 @@
     <Header />
   </div>
   <div id="wishes" class="bg-gray-100 px-10 pt-16 lg:pt-20">
-    <WishesView />
+    <Suspense>
+      <WishesView />
+      <template #fallback>
+        <WishesLoading />
+      </template>
+    </Suspense>
   </div>
   <div id="footer" class="bg-black px-10 text-white"><Footer /></div>
 </template>
