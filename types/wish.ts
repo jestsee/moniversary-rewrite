@@ -1,4 +1,8 @@
-import type { DatabaseItemResult, ExtractedRichTextPropertyValue } from "./notion";
+import { z } from "zod";
+import type {
+  DatabaseItemResult,
+  ExtractedRichTextPropertyValue,
+} from "./notion";
 
 export type WishResponse = {
   properties: {
@@ -8,8 +12,10 @@ export type WishResponse = {
   };
 } & DatabaseItemResult;
 
-export type Wish = {
-  title: string
-  from: string
-  content: string
-}
+export const wishSchema = z.object({
+  title: z.string().min(10),
+  from: z.string().min(1),
+  content: z.string().min(1),
+});
+
+export type Wish = z.infer<typeof wishSchema>

@@ -1,6 +1,6 @@
 import type { Wish } from "~/types/wish";
-import { extractText } from "../utils/extractor";
-import { getWishResults } from "../utils/notion-sdk";
+import { extractText } from "../../utils/extractor";
+import { getWishResults } from "./notion-sdk";
 
 export default defineEventHandler<Promise<Wish[]>>(async () => {
   const wishResults = await getWishResults();
@@ -10,8 +10,3 @@ export default defineEventHandler<Promise<Wish[]>>(async () => {
     content: extractText(wish.properties.Wish),
   }));
 });
-
-// TODO
-// error handle
-// page icon
-// skeleton loading?
