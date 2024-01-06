@@ -13,7 +13,7 @@ const { isOpen, openModal, closeModal } = useModal();
       @click="openModal"
       class="flex cursor-pointer flex-col gap-y-4 rounded-3xl bg-white px-7 py-8 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.05)] transition-all hover:scale-105"
     >
-      <h3 class="cut-2 text-2xl font-bold">{{ wish.title }}</h3>
+      <h3 class="max-w-[240px] text-ellipsis overflow-hidden whitespace-nowrap text-2xl font-bold">{{ wish.title }}</h3>
       <p class="cut text-gray-700">
         {{ wish.content }}
       </p>
@@ -38,13 +38,6 @@ const { isOpen, openModal, closeModal } = useModal();
 .cut {
   display: -webkit-box;
   -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.cut-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
