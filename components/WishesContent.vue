@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Wish } from '~/types/wish';
+import type { Wish } from "~/types/wish";
 
 interface Props {
   items: Wish[];

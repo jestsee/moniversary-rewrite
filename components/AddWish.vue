@@ -5,7 +5,6 @@ import { ref, watch } from "vue";
 import type { Wish } from "~/types/wish";
 
 const { isOpen, openModal, closeModal } = useModal();
-// const { addWish, loadingWish } = useFetch();
 
 interface Props {
   reload: CallableFunction;
@@ -18,9 +17,26 @@ const initData: Wish = {
   content: "",
 };
 const data = ref<Wish>(initData);
-const errTitle = ref<string>();
-const errFrom = ref<string>();
-const errWish = ref<string>();
+const dataToSubmit = ref<Wish>();
+const errorTitle = ref<string>();
+const errorFrom = ref<string>();
+const errorWish = ref<string>();
+const error = ref<string>();
+
+const { pending, status } = useFetch("/api/notion", {
+  method: "post",
+  immediate: false,
+  body: dataToSubmit,
+  onResponse({ response }) {
+    if (response.status !== 200) {
+      error.value = response.statusText
+      return;
+    }
+    closeModal();
+    props.reload();
+    error.value = undefined;
+  },
+});
 
 const handleClose = () => {
   closeModal();
@@ -28,9 +44,9 @@ const handleClose = () => {
 
 const handleOpen = () => {
   data.value = { ...initData };
-  errTitle.value = undefined;
-  errFrom.value = undefined;
-  errWish.value = undefined;
+  errorTitle.value = undefined;
+  errorFrom.value = undefined;
+  errorWish.value = undefined;
   openModal();
 };
 
@@ -49,50 +65,44 @@ const errorCheck = (
 const validate = (): boolean => {
   let canSubmit = true;
   if (data.value.title === "") {
-    errTitle.value = "jangan kosong dong weh";
+    errorTitle.value = "jangan kosong dong weh";
     canSubmit = false;
   }
   if (data.value.from === "") {
-    errFrom.value = "jangan kosong dong weh";
+    errorFrom.value = "jangan kosong dong weh";
     canSubmit = false;
   }
   if (data.value.content === "") {
-    errWish.value = "jangan kosong dong weh";
+    errorWish.value = "jangan kosong dong weh";
     canSubmit = false;
   }
   return canSubmit;
 };
 
-const submit = async () => {
-  console.log(data.value);
-  if (errTitle.value || errFrom.value || errWish.value) return;
+const submit = () => {
+  if (errorTitle.value || errorFrom.value || errorWish.value) return;
 
   if (validate()) {
-    console.log("halal untuk disubmit");
-    // const resp = await addWish(data.value);
-    // if (resp.state === "SUCCESS") {
-    //   closeModal();
-    //   props.reload();
-    // }
+    dataToSubmit.value = {...data.value};
   }
 };
 
 watch(
   () => [data.value.title],
   () => {
-    errTitle.value = errorCheck(data.value.title, 5, errTitle.value);
+    errorTitle.value = errorCheck(data.value.title, 5, errorTitle.value);
   }
 );
 watch(
   () => [data.value.from],
   () => {
-    errFrom.value = errorCheck(data.value.from, 3, errFrom.value);
+    errorFrom.value = errorCheck(data.value.from, 3, errorFrom.value);
   }
 );
 watch(
   () => [data.value.content],
   () => {
-    errWish.value = errorCheck(data.value.content, 10, errWish.value);
+    errorWish.value = errorCheck(data.value.content, 10, errorWish.value);
   }
 );
 </script>
@@ -104,34 +114,35 @@ watch(
   >
     <IconsPlus class="h-16 text-white" />
   </button>
-  <!-- :loading="loadingWish" -->
   <Modal
     title="Drop your wish"
     :is-open="isOpen"
     :open-modal="handleOpen"
     :close-modal="handleClose"
     :submit="submit"
+    :loading="pending && status === 'pending'"
   >
     <form @submit="" class="grid grid-cols-1 gap-y-4">
       <Input
         v-model="data.title"
         label="title"
         placeholder="hbd gitu ato apa kek.."
-        :error="errTitle"
+        :error="errorTitle"
       />
       <Input
         v-model="data.from"
         label="from"
         placeholder="dari siapa ni?"
-        :error="errFrom"
+        :error="errorFrom"
       />
       <Input
         v-model="data.content"
         label="wish"
         placeholder="yang panjangan gitu..."
-        :error="errWish"
+        :error="errorWish"
         text-area
       />
+      <p v-if="error" class="text-red-600 text-sm -mt-[0.8rem]">{{ error }}</p>
     </form>
   </Modal>
 </template>

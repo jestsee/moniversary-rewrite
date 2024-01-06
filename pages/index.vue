@@ -1,3 +1,7 @@
+<script setup lang="ts">
+useHead({title: "Cie Tua"})
+</script>
+
 <template>
   <div id="header" class="mx-10 mr-16 flex h-[100vh] bg-white pt-24 lg:block">
     <Header />

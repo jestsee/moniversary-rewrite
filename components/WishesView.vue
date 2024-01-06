@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import WishesContent from "./WishesContent.vue";
-import { watch } from "vue";
-import AddWishContainer from "./AddWishContainer.vue";
-import AddWish from "./AddWish.vue";
-import Loading from "./Loading.vue";
-
 const {
   data: wishes,
   refresh,
@@ -12,12 +6,6 @@ const {
 } = await useFetch("/api/notion");
 </script>
 <template>
-  <!-- <div
-    v-if="loadingWish"
-    class="flex h-[100vh] max-h-[750px] min-h-[720px] flex-col items-center justify-center"
-  >
-    <Loading class="animate-spin h-12"/>
-  </div> -->
   <div class="mx-auto flex w-full gap-x-6 py-10 xl:w-[1240px]">
     <div class="sticky top-36 hidden self-start lg:block">
       <AddWishContainer :reload="refresh" />
