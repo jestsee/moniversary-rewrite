@@ -21,6 +21,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.16",
     "@notionhq/client": "^2.2.14",
+    "netlify-cli": "^17.11.1",
     "zod": "^3.22.4"
   }
 }
